@@ -1,0 +1,44 @@
+{
+  "name": "soporteclinico.com",
+  "version": "0.0.1",
+  "description": "test done to get a job",
+  "engines": {
+    "node": "10.12.0",
+    "npm": "6.x"
+  },
+  "main": "server.js",
+  "scripts": {
+    "deploy-proj": "npm run compile-proj1 && npm run compile-proj2",
+    "compile-proj1": "cd client/ && npm run build && cd .. && git add . && git commit",
+    "compile-proj2": "git push && npm run deploy-prod",
+    "deploy-prod": "eb deploy soporte-clinico-prod --profile pm ",
+    "start": "node server.js",
+    "server": "nodemon server.js --ignore client",
+    "i-a": "npm install && cd client && npm install ",
+    "dev": "concurrently \" cd client && npm start \" \" npm run server \" ",
+    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
+  },
+  "author": "Luis G. Sandoval",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.489.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "concurrently": "^4.1.0",
+    "express": "^4.17.1",
+    "generate-password": "^1.4.2",
+    "jsonwebtoken": "^8.4.0",
+    "jwt-decode": "^2.2.0",
+    "mongoose": "^5.4.11",
+    "multer": "^1.4.1",
+    "multer-s3": "^2.9.0",
+    "nodemailer": "^6.2.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "path": "^0.12.7",
+    "validator": "^10.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
