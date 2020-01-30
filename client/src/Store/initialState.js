@@ -8,6 +8,11 @@ export const initialState = {
     section: '',
     open: false
   },
+  updateMode: false,
+
+  // Notes state
+  noteId: '',
+  noteDetails: null,
   todoForm: {
     executionDate: '',
     title: '',

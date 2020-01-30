@@ -16,15 +16,33 @@ export const reducer = (state, action) => {
         notes: action.payload
       };
 
+    case 'LOAD_NOTE_ID':
+      return {
+        ...state,
+        noteId: action.payload
+      };
+
+    case 'LOAD_NOTE_DETAILS':
+      return {
+        ...state,
+        noteDetails: action.payload
+      };
+
     //******************************* */
     //*            UTILS             */
     //******************************* */
 
     // Spining utils that shows a loading state of the data
-    case 'LOADER_ACTIVATION':
+    case 'LOADER':
       return {
         ...state,
         loaderActivation: action.payload
+      };
+
+    case 'ACTIVATE_UPDATE_MODE':
+      return {
+        ...state,
+        updateMode: action.payload
       };
 
     // It's the alert message that tells the user everything of the app

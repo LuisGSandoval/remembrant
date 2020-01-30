@@ -4,15 +4,13 @@ import { Button, Input } from 'reactstrap';
 import Flatpickr from 'react-flatpickr';
 import PriorityBagde from '../../../Components/PriorityBagde';
 
-import { createNote } from '../../../Actions/NotesActions';
+import { createNote, updateNote } from '../../../Actions/NotesActions';
 
 const ToDoCreateForm = () => {
   const [store, dispatch] = useContext(CTX);
   const { todoForm } = store;
-  const { notes } = store;
+  const { notes, updateMode } = store;
   const { executionDate, title, description, priority, errors } = todoForm;
-
-  const toggle = () => dispatch({ type: 'MODAL_TOGGLE', payload: false });
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -27,26 +25,55 @@ const ToDoCreateForm = () => {
 
     delete todoForm.errors;
     todoForm.executionDate = new Date(executionDate).getTime();
-    createNote(todoForm)
-      .then(data => {
-        console.log(data);
-        dispatch({ type: 'UPDATE_TOAST_MESSAGE', payload: data });
-        dispatch({
-          type: 'LOAD_NOTE_LIST',
-          payload: [...notes, data.data]
-        });
-        dispatch({ type: 'MODAL_TOGGLE', payload: false });
-      })
-      .catch(err => {
-        dispatch({
-          type: 'NOTE_FORM_UPDATE',
-          payload: { ...todoForm, errors: err }
-        });
 
-        dispatch({ type: 'UPDATE_TOAST_MESSAGE', payload: err });
+    if (!updateMode) {
+      createNote(todoForm)
+        .then(data => {
+          console.log(data);
+          dispatch({ type: 'UPDATE_TOAST_MESSAGE', payload: data });
+          dispatch({
+            type: 'LOAD_NOTE_LIST',
+            payload: [...notes, data.data]
+          });
+          dispatch({ type: 'MODAL_TOGGLE', payload: false });
+        })
+        .catch(err => {
+          dispatch({
+            type: 'NOTE_FORM_UPDATE',
+            payload: { ...todoForm, errors: err }
+          });
 
-        console.log(err);
-      });
+          dispatch({ type: 'UPDATE_TOAST_MESSAGE', payload: err });
+
+          console.log(err);
+        });
+    } else {
+      updateNote(todoForm)
+        .then(data => {
+          dispatch({ type: 'UPDATE_TOAST_MESSAGE', payload: data });
+          let newNotes = notes.map(note => {
+            if (note._id === todoForm._id) {
+              return data.data;
+            }
+            return note;
+          });
+          dispatch({
+            type: 'LOAD_NOTE_LIST',
+            payload: newNotes
+          });
+          dispatch({ type: 'MODAL_TOGGLE', payload: false });
+        })
+        .catch(err => {
+          dispatch({
+            type: 'NOTE_FORM_UPDATE',
+            payload: { ...todoForm, errors: err }
+          });
+
+          dispatch({ type: 'UPDATE_TOAST_MESSAGE', payload: err });
+
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -137,16 +164,8 @@ const ToDoCreateForm = () => {
         </div>
       </div>
       <div className="col-12 p-4 d-flex justify-content-center">
-        <Button
-          color="secondary"
-          type="button"
-          className="mr-3"
-          onClick={toggle}
-        >
-          Cancel
-        </Button>
         <Button color="primary" type="submit">
-          Crear
+          {updateMode ? 'Actualizar' : 'Crear'}
         </Button>
       </div>
     </form>

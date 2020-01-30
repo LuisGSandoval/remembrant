@@ -18,10 +18,19 @@ export const getNotes = () => {
   });
 };
 
-export const updateNote = id => {
+export const updateNote = data => {
   return new Promise((resolve, reject) => {
     axiosInst
-      .get(`/api/notes/${id}`)
+      .patch('/api/notes/', data)
+      .then(res => resolve(res.data))
+      .catch(err => reject(err.response.data));
+  });
+};
+
+export const setNoteToFinished = data => {
+  return new Promise((resolve, reject) => {
+    axiosInst
+      .patch('/api/notes/finished/', data)
       .then(res => resolve(res.data))
       .catch(err => reject(err.response.data));
   });
@@ -30,7 +39,7 @@ export const updateNote = id => {
 export const deleteNote = id => {
   return new Promise((resolve, reject) => {
     axiosInst
-      .get(`/api/notes/${id}`)
+      .delete(`/api/notes/${id}`)
       .then(res => resolve(res.data))
       .catch(err => reject(err.response.data));
   });
