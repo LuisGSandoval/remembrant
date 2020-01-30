@@ -14,4 +14,4 @@
 
 5. The project is live too, if you want to see the end result
 
-Demo [link](https://e-vol.herokuapp.com/ 'Title'){:target="\_blank"}.
+Check the <a href="https://e-vol.herokuapp.com/" target="_blank">Demo</a>
