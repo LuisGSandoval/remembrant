@@ -73,6 +73,35 @@ router.get(
 );
 
 /**
+ * @route GET /api/notes/todays-count
+ * @desc Get all notes of one user
+ * @access Private
+ */
+router.get(
+  '/todays-count',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Note.count(
+      {
+        activeNote: true,
+        creator: req.user.id
+      },
+      { description: 0 }
+    ).then(notes => {
+      if (notes.length < 1) {
+        return res.status(400).json({
+          msg:
+            'Al parecer no tienes notas, crea tu primer nota dando click en "nueva"',
+          type: 'info'
+        });
+      } else {
+        res.json(notes);
+      }
+    });
+  }
+);
+
+/**
  * @route PATCH /api/notes/:id
  * @desc Modify a specific to do
  * @access Private

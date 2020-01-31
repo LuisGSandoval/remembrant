@@ -18,6 +18,16 @@ const ModalTemplate = () => {
     dispatch({ type: 'LOAD_NOTE_ID', payload: '' });
     dispatch({ type: 'LOAD_NOTE_DETAILS', payload: null });
     dispatch({ type: 'ACTIVATE_UPDATE_MODE', payload: false });
+    dispatch({
+      type: 'NOTE_FORM_UPDATE',
+      payload: {
+        executionDate: '',
+        title: '',
+        description: '',
+        priority: 1,
+        errors: {}
+      }
+    });
     dispatch({ type: 'MODAL_TOGGLE', payload: { section: '', open: false } });
   };
 

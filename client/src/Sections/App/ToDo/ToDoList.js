@@ -81,7 +81,6 @@ const ToDoList = () => {
                 className={`${note.finishedTask ? 'bg-dark' : ''}`}
                 action
                 key={note._id}
-                id=""
               >
                 <FormGroup check>
                   <Input

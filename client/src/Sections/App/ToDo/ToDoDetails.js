@@ -23,9 +23,8 @@ const ToDoDetails = () => {
   const removeNote = () => {
     deleteNote(noteId)
       .then(data => {
-        let ind = notes.indexOf(noteId);
-        notes.splice(ind, 1);
-        dispatch({ type: 'LOAD_NOTE_LIST', payload: [...notes] });
+        let newNotes = notes.filter(note => note._id !== noteId);
+        dispatch({ type: 'LOAD_NOTE_LIST', payload: newNotes });
 
         dispatch({ type: 'UPDATE_TOAST_MESSAGE', payload: data });
         dispatch({ type: 'MODAL_TOGGLE', payload: false });
