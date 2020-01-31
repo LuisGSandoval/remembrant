@@ -18,15 +18,6 @@ export const getNotes = () => {
   });
 };
 
-export const getTodaysNotesCount = () => {
-  return new Promise((resolve, reject) => {
-    axiosInst
-      .get('/api/notes/todays-count')
-      .then(res => resolve(res.data))
-      .catch(err => reject(err.response.data));
-  });
-};
-
 export const updateNote = data => {
   return new Promise((resolve, reject) => {
     axiosInst
