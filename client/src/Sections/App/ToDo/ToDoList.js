@@ -21,6 +21,7 @@ const ToDoList = () => {
         dispatch({ type: 'LOADER', payload: false });
       })
       .catch(err => {
+        dispatch({ type: 'LOADER', payload: false });
         dispatch({ type: 'UPDATE_TOAST_MESSAGE', payload: err });
       });
     return () => {

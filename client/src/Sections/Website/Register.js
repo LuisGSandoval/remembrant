@@ -37,21 +37,16 @@ function Registration() {
     });
     register(registerForm)
       .then(data => {
-        dispatch({
-          type: 'UPDATE_TOAST_MESSAGE',
-          payload: data
-        });
+        dispatch({ type: 'UPDATE_TOAST_MESSAGE', payload: data });
       })
       .catch(err => {
         dispatch({
           type: 'LOADER_ACTIVATION',
           payload: false
         });
+        dispatch({ type: 'UPDATE_TOAST_MESSAGE', payload: err });
+
         setRegister({ ...registerForm, errors: err });
-        dispatch({
-          type: 'UPDATE_TOAST_MESSAGE',
-          payload: err
-        });
       });
   };
 

@@ -14,7 +14,9 @@ const ToastifyComponent = () => {
       });
     };
 
-    if (toastMsg !== null) {
+    console.log('toastMsg', toastMsg);
+
+    if (toastMsg && toastMsg !== null) {
       if (toastMsg.type === 'success') {
         toast(toastMsg.msg, {
           type: toast.TYPE.SUCCESS,
