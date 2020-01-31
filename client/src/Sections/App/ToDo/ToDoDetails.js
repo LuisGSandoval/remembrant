@@ -48,7 +48,7 @@ const ToDoDetails = () => {
     <div className="container">
       <div className="row">
         {/* options */}
-        <div className="col-4 offset-8">
+        <div className="col-12 d-flex justify-content-end">
           <button
             className="btn btn-primary mr-2"
             id="editButton"
