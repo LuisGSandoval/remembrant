@@ -8,6 +8,9 @@ const ToDoCreateFrom = React.lazy(() =>
 );
 
 const ToDoDetais = React.lazy(() => import('../Sections/App/ToDo/ToDoDetails'));
+const SortingFilter = React.lazy(() =>
+  import('../Sections/App/ToDo/SortingFilter')
+);
 
 const ModalTemplate = () => {
   const [store, dispatch] = useContext(CTX);
@@ -48,6 +51,7 @@ const ModalTemplate = () => {
         <Suspense fallback={<div>Cargando...</div>}>
           {(updateMode || section === 'createNewNote') && <ToDoCreateFrom />}
           {!updateMode && section === 'noteDetails' && <ToDoDetais />}
+          {section === 'filters' && <SortingFilter />}
         </Suspense>
       </ModalBody>
     </Modal>

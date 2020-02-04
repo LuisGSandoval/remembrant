@@ -1,14 +1,21 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { CTX } from '../../../Store/Store';
 import { setNoteToFinished, getNotes } from '../../../Actions/NotesActions';
-import { ListGroup, ListGroupItem, FormGroup, Input } from 'reactstrap';
+import { sortItems } from '../../../Utils/sortItemsBy';
+import {
+  Tooltip,
+  ListGroup,
+  ListGroupItem,
+  FormGroup,
+  Input
+} from 'reactstrap';
 import PriorityBagde from '../../../Components/PriorityBagde';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 
 const ToDoList = () => {
   const [store, dispatch] = useContext(CTX);
-  const { notes } = store;
+  const { notes, sortBy } = store;
 
   useEffect(() => {
     dispatch({ type: 'LOADER', payload: true });
@@ -32,6 +39,25 @@ const ToDoList = () => {
       dispatch({ type: 'LOADER', payload: false });
     };
   }, [dispatch]);
+
+  return (
+    <div className="my-5">
+      <ListGroup>
+        {notes &&
+          notes.length > 0 &&
+          sortItems(notes, sortBy).map(note => <ListItem note={note} />)}
+      </ListGroup>
+    </div>
+  );
+};
+
+const ListItem = ({ note }) => {
+  const [store, dispatch] = useContext(CTX);
+  const { notes } = store;
+
+  const [editToolTip, setEditToolTip] = useState(false);
+
+  const toggleEditToolTip = () => setEditToolTip(!editToolTip);
 
   const setFinished = (id, finishedTask) => {
     setNoteToFinished({ id, finishedTask })
@@ -63,70 +89,59 @@ const ToDoList = () => {
     });
     dispatch({ type: 'LOAD_NOTE_ID', payload: id });
   };
+
   return (
-    <div className="my-5">
-      <ListGroup>
-        {notes &&
-          notes.length > 0 &&
-          notes
-            .sort(
-              (a, b) =>
-                new Date(a.executionDate).getTime() -
-                new Date(b.executionDate).getTime()
-            )
-            .sort((a, b) => b.priority - a.priority)
-            .sort((a, b) => a.finishedTask - b.finishedTask)
-            .map(note => (
-              <ListGroupItem
-                className={`${note.finishedTask ? 'bg-secondary' : ''}`}
-                action
-                key={note._id}
-              >
-                <FormGroup check>
-                  <Input
-                    type="checkbox"
-                    checked={note.finishedTask}
-                    onChange={() => setFinished(note._id, note.finishedTask)}
-                  />
+    <ListGroupItem
+      className={`${note.finishedTask ? 'bg-secondary' : ''}`}
+      action
+      key={note._id}
+    >
+      <FormGroup check>
+        <Input
+          type="checkbox"
+          checked={note.finishedTask}
+          id={`a${note._id}finished`}
+          onChange={() => setFinished(note._id, note.finishedTask)}
+        />
 
-                  <div onClick={() => toDoDetails(note._id)} className="w-100">
-                    <PriorityBagde priority={note.priority} />
+        <Tooltip
+          placement="top"
+          isOpen={editToolTip}
+          target={`a${note._id}finished`}
+          toggle={toggleEditToolTip}
+        >
+          {note.finishedTask ? 'terminado' : 'sin terminar'}
+        </Tooltip>
 
-                    {note.finishedTask ? (
-                      <del>
-                          <span className="text-white">
-                            {note.title}
-                          </span>
-                        </del>
-                    ) : (
-                      <span>{note.title}</span>
-                    )}
+        <div onClick={() => toDoDetails(note._id)} className="w-100">
+          <PriorityBagde priority={note.priority} />
 
-                    {note.finishedTask ? (
-                      <del>
-                        <span className="text-light ml-2">
-                          {format(
-                            new Date(note.executionDate),
-                            'dd MMMM yyyy',
-                            {
-                              locale: es
-                            }
-                          )}
-                        </span>
-                      </del>
-                    ) : (
-                      <span className="text-muted ml-2">
-                        {format(new Date(note.executionDate), 'dd MMMM yyyy', {
-                          locale: es
-                        })}
-                      </span>
-                    )}
-                  </div>
-                </FormGroup>
-              </ListGroupItem>
-            ))}
-      </ListGroup>
-    </div>
+          {note.finishedTask ? (
+            <del>
+              <span className="text-white">{note.title}</span>
+            </del>
+          ) : (
+            <span>{note.title}</span>
+          )}
+
+          {note.finishedTask ? (
+            <del>
+              <span className="text-light ml-2">
+                {format(new Date(note.executionDate), 'dd MMMM yyyy', {
+                  locale: es
+                })}
+              </span>
+            </del>
+          ) : (
+            <span className="text-muted ml-2">
+              {format(new Date(note.executionDate), 'dd MMMM yyyy', {
+                locale: es
+              })}
+            </span>
+          )}
+        </div>
+      </FormGroup>
+    </ListGroupItem>
   );
 };
 

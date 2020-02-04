@@ -15,6 +15,11 @@ export const reducer = (state, action) => {
         ...state,
         notes: action.payload
       };
+    case 'CHANGE_SORTING':
+      return {
+        ...state,
+        sortBy: action.payload
+      };
 
     case 'LOAD_NOTE_ID':
       return {

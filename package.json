@@ -1,5 +1,5 @@
 {
-  "name": "soporteclinico.com",
+  "name": "e-vol.herokuapp.com",
   "version": "0.0.1",
   "description": "test done to get a job",
   "engines": {
@@ -15,7 +15,7 @@
     "start": "node server.js",
     "server": "nodemon server.js --ignore client",
     "i-a": "npm install && cd client && npm install ",
-    "dev": "concurrently \" cd client && npm start \" \" npm run server \" ",
+    "dev": "concurrently \" cd client && npm run start \" \" npm run server \" ",
     "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
   },
   "author": "Luis G. Sandoval",
