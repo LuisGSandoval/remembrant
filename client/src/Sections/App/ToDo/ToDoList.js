@@ -64,7 +64,7 @@ const ToDoList = () => {
     dispatch({ type: 'LOAD_NOTE_ID', payload: id });
   };
   return (
-    <div className="mt-4">
+    <div className="my-5">
       <ListGroup>
         {notes &&
           notes.length > 0 &&
@@ -78,7 +78,7 @@ const ToDoList = () => {
             .sort((a, b) => a.finishedTask - b.finishedTask)
             .map(note => (
               <ListGroupItem
-                className={`${note.finishedTask ? 'bg-dark' : ''}`}
+                className={`${note.finishedTask ? 'bg-secondary' : ''}`}
                 action
                 key={note._id}
               >
@@ -93,14 +93,18 @@ const ToDoList = () => {
                     <PriorityBagde priority={note.priority} />
 
                     {note.finishedTask ? (
-                      <del>{note.title}</del>
+                      <del>
+                          <span className="text-white">
+                            {note.title}
+                          </span>
+                        </del>
                     ) : (
                       <span>{note.title}</span>
                     )}
 
                     {note.finishedTask ? (
                       <del>
-                        <span className="text-muted ml-2">
+                        <span className="text-light ml-2">
                           {format(
                             new Date(note.executionDate),
                             'dd MMMM yyyy',
