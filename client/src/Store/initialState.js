@@ -11,7 +11,10 @@ export const initialState = {
   updateMode: false,
 
   // Notes state
-  sortBy: 'all',
+  sortBy: {
+    finished: 'none',
+    type: 'priority'
+  },
   noteId: '',
   noteDetails: null,
   todoForm: {

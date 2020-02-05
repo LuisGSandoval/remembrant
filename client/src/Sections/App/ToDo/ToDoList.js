@@ -45,7 +45,9 @@ const ToDoList = () => {
       <ListGroup>
         {notes &&
           notes.length > 0 &&
-          sortItems(notes, sortBy).map(note => <ListItem note={note} />)}
+          sortItems(notes, sortBy.type, sortBy.finished).map(note => (
+            <ListItem note={note} key={note._id} />
+          ))}
       </ListGroup>
     </div>
   );
@@ -94,7 +96,6 @@ const ListItem = ({ note }) => {
     <ListGroupItem
       className={`${note.finishedTask ? 'bg-secondary' : ''}`}
       action
-      key={note._id}
     >
       <FormGroup check>
         <Input

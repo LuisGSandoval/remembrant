@@ -9,7 +9,7 @@ const ToDoCreateFrom = React.lazy(() =>
 
 const ToDoDetais = React.lazy(() => import('../Sections/App/ToDo/ToDoDetails'));
 const SortingFilter = React.lazy(() =>
-  import('../Sections/App/ToDo/SortingFilter')
+  import('../Sections/App/ToDo/ToDoSortingFilter')
 );
 
 const ModalTemplate = () => {

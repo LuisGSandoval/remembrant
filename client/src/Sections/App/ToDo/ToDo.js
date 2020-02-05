@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { CTX } from '../../../Store/Store';
 import EVolNavbar from '../../../Components/EVolNavbar';
 import ToDoCreateButton from './ToDoCreateButton';
 import ToDoList from './ToDoList';
 
 const Notes = () => {
-  const [store, dispatch] = useContext(CTX);
+  const [, dispatch] = useContext(CTX);
 
   return (
     <div>
@@ -16,6 +16,8 @@ const Notes = () => {
         <hr />
         <ToDoCreateButton />
         <button
+          title="filter"
+          className="btn btn-dark"
           onClick={() =>
             dispatch({
               type: 'MODAL_TOGGLE',
@@ -23,7 +25,7 @@ const Notes = () => {
             })
           }
         >
-          Filters
+          <i className="fa fa-filter" />
         </button>
         <ToDoList />
       </div>
