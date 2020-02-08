@@ -30,6 +30,9 @@ const NoteSchema = new Schema({
     type: Boolean,
     default: false
   },
+  finishedDate: {
+    type: String
+  },
   dateRegistered: {
     type: Date,
     default: Date.now

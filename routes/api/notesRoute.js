@@ -146,7 +146,8 @@ router.patch(
       },
       {
         $set: {
-          finishedTask: !req.body.finishedTask
+          finishedTask: !req.body.finishedTask,
+          finishedDate: new Date().toISOString()
         }
       },
       { new: true, useFindAndModify: false }
