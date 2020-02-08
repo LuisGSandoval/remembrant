@@ -12,7 +12,7 @@ const EVolNavbar = () => {
       <Navbar color="light" className="border-bottom border-danger" light>
         <NavbarBrand>remembrant</NavbarBrand>
         <NavbarText className="cursor-pointer" onClick={logout}>
-          {user.email.split('@')[0]}
+          {user.email}
         </NavbarText>
         <NavbarText className="cursor-pointer" onClick={logout}>
           Salir
