@@ -211,8 +211,12 @@ const ToDoDetails = () => {
                   </span>
                   <br />
                   <span>
-                    <span className="text-muted">Description: </span>
-                    {noteDetails.description}
+                    {noteDetails.description && (
+                      <>
+                        <span className="text-muted">Description: </span>
+                        {noteDetails.description}
+                      </>
+                    )}
                   </span>
                 </>
               )}
