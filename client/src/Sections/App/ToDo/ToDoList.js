@@ -7,7 +7,7 @@ import {
   ListGroup,
   ListGroupItem,
   FormGroup,
-  Input
+  Input,
 } from 'reactstrap';
 import PriorityBagde from '../../../Components/PriorityBagde';
 import { format } from 'date-fns';
@@ -20,21 +20,21 @@ const ToDoList = () => {
   useEffect(() => {
     dispatch({ type: 'LOADER', payload: true });
     getNotes()
-      .then(data => {
+      .then((data) => {
         dispatch({
           type: 'LOAD_NOTE_LIST',
-          payload: data
+          payload: data,
         });
         dispatch({ type: 'LOADER', payload: false });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: 'LOADER', payload: false });
         dispatch({ type: 'UPDATE_TOAST_MESSAGE', payload: err });
       });
     return () => {
       dispatch({
         type: 'LOAD_NOTE_LIST',
-        payload: []
+        payload: [],
       });
       dispatch({ type: 'LOADER', payload: false });
     };
@@ -45,7 +45,7 @@ const ToDoList = () => {
       <ListGroup>
         {notes &&
           notes.length > 0 &&
-          sortItems(notes, sortBy.type, sortBy.finished).map(note => (
+          sortItems(notes, sortBy.type, sortBy.finished).map((note) => (
             <ListItem note={note} key={note._id} />
           ))}
       </ListGroup>
@@ -63,9 +63,9 @@ const ListItem = ({ note }) => {
 
   const setFinished = (id, finishedTask) => {
     setNoteToFinished({ id, finishedTask })
-      .then(data => {
+      .then((data) => {
         dispatch({ type: 'UPDATE_TOAST_MESSAGE', payload: data });
-        let newNotes = notes.map(note => {
+        let newNotes = notes.map((note) => {
           if (note._id === id) {
             return data.data;
           }
@@ -73,21 +73,21 @@ const ListItem = ({ note }) => {
         });
         dispatch({
           type: 'LOAD_NOTE_LIST',
-          payload: newNotes
+          payload: newNotes,
         });
         dispatch({ type: 'MODAL_TOGGLE', payload: false });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: 'UPDATE_TOAST_MESSAGE', payload: err });
 
         console.log(err);
       });
   };
 
-  const toDoDetails = id => {
+  const toDoDetails = (id) => {
     dispatch({
       type: 'MODAL_TOGGLE',
-      payload: { section: 'noteDetails', open: true }
+      payload: { section: 'noteDetails', open: true },
     });
     dispatch({ type: 'LOAD_NOTE_ID', payload: id });
   };
@@ -129,14 +129,14 @@ const ListItem = ({ note }) => {
             <del>
               <span className="text-light ml-2">
                 {format(new Date(note.executionDate), 'dd MMMM yyyy', {
-                  locale: es
+                  locale: es,
                 })}
               </span>
             </del>
           ) : (
             <span className="text-muted ml-2">
               {format(new Date(note.executionDate), 'dd MMMM yyyy', {
-                locale: es
+                locale: es,
               })}
             </span>
           )}

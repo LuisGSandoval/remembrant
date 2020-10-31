@@ -25,19 +25,19 @@ router.post(
       executionDate: req.body.executionDate,
       title: req.body.title,
       description: req.body.description,
-      priority: req.body.priority
+      priority: req.body.priority,
     });
 
     newNote
       .save()
-      .then(data =>
+      .then((data) =>
         res.json({ msg: 'Nota creada con éxito', type: 'success', data })
       )
-      .catch(err =>
+      .catch((err) =>
         res.status(400).json({
           msg: 'Error al crear la nota',
           type: 'danger',
-          data: err
+          data: err,
         })
       );
   }
@@ -55,15 +55,16 @@ router.get(
     Note.find(
       {
         activeNote: true,
-        creator: req.user.id
+        creator: req.user.id,
+        finishedTask: req.body.finishedTask,
       },
       { description: 0 }
-    ).then(notes => {
+    ).then((notes) => {
       if (notes.length < 1) {
         return res.status(400).json({
           msg:
-            'Al parecer no tienes notas, crea tu primer nota dando click en "nueva"',
-          type: 'info'
+            'Al parecer no tienes notas activas, crea tu primer nota dando click en "nueva"',
+          type: 'info',
         });
       } else {
         res.json(notes);
@@ -90,40 +91,40 @@ router.patch(
 
     Note.findOneAndUpdate(
       {
-        _id: req.body._id
+        _id: req.body._id,
       },
       {
         $set: {
           executionDate: req.body.executionDate,
           title: req.body.title,
           description: req.body.description,
-          priority: req.body.priority
-        }
+          priority: req.body.priority,
+        },
       },
       { new: true, useFindAndModify: false }
     )
       .then(() => {
         Note.find({ _id: req.body._id })
-          .then(updatedNote => {
+          .then((updatedNote) => {
             res.json({
               msg: 'Nota actualizada exitosamente',
               type: 'success',
-              data: updatedNote[0]
+              data: updatedNote[0],
             });
           })
-          .catch(err => {
+          .catch((err) => {
             res.status(400).json({
               msg: 'Error al traer la nueva nota',
               type: 'error',
-              data: err
+              data: err,
             });
           });
       })
-      .catch(err =>
+      .catch((err) =>
         res.status(400).json({
           msg: 'Error al actualizar la nota',
           type: 'error',
-          data: err
+          data: err,
         })
       );
   }
@@ -142,38 +143,38 @@ router.patch(
     Note.findOneAndUpdate(
       {
         _id: req.body.id,
-        creator: req.user.id
+        creator: req.user.id,
       },
       {
         $set: {
           finishedTask: !req.body.finishedTask,
-          finishedDate: new Date().toISOString()
-        }
+          finishedDate: new Date().toISOString(),
+        },
       },
       { new: true, useFindAndModify: false }
     )
       .then(() => {
         Note.find({ _id: req.body.id })
-          .then(updatedNote => {
+          .then((updatedNote) => {
             res.json({
               msg: 'Nota actualizada exitosamente',
               type: 'success',
-              data: updatedNote[0]
+              data: updatedNote[0],
             });
           })
-          .catch(err => {
+          .catch((err) => {
             res.status(400).json({
               msg: 'Error al traer la nota actualizada',
               type: 'error',
-              data: err
+              data: err,
             });
           });
       })
-      .catch(err =>
+      .catch((err) =>
         res.status(400).json({
           msg: 'Error al terminar la nota',
           type: 'error',
-          data: err
+          data: err,
         })
       );
   }
@@ -191,23 +192,23 @@ router.delete(
   (req, res) => {
     Note.findOneAndUpdate(
       {
-        _id: req.params.id
+        _id: req.params.id,
       },
       {
         $set: {
-          activeNote: false
-        }
+          activeNote: false,
+        },
       },
       { new: true }
     )
-      .then(data =>
+      .then((data) =>
         res.json({ msg: 'Nota eliminada exitosamente', type: 'success', data })
       )
-      .catch(err =>
+      .catch((err) =>
         res.status(400).json({
           msg: 'Error, no se pudo eliminar la nota',
           type: 'error',
-          data: err
+          data: err,
         })
       );
   }
@@ -224,12 +225,12 @@ router.get(
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Note.find({
-      _id: req.params.id
-    }).then(notes => {
+      _id: req.params.id,
+    }).then((notes) => {
       if (notes.length < 1) {
         return res.status(400).json({
           msg: 'no se encuentra la nota seleccionada',
-          type: 'info'
+          type: 'info',
         });
       } else {
         res.json(notes[0]);

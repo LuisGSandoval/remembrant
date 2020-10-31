@@ -21,7 +21,7 @@ const Notes = () => {
           onClick={() =>
             dispatch({
               type: 'MODAL_TOGGLE',
-              payload: { section: 'filters', open: true }
+              payload: { section: 'filters', open: true },
             })
           }
         >
