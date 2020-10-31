@@ -4,7 +4,7 @@ import { Tooltip } from 'reactstrap';
 import {
   getNoteDetails,
   deleteNote,
-  setNoteToFinished
+  setNoteToFinished,
 } from '../../../Actions/NotesActions';
 import PriorityBagde from '../../../Components/PriorityBagde';
 import { format } from 'date-fns';
@@ -28,9 +28,9 @@ const ToDoDetails = () => {
 
   const toggleCheck = (id, finishedTask) => {
     setNoteToFinished({ id, finishedTask })
-      .then(data => {
+      .then((data) => {
         dispatch({ type: 'UPDATE_TOAST_MESSAGE', payload: data });
-        let newNotes = notes.map(note => {
+        let newNotes = notes.map((note) => {
           if (note._id === id) {
             return data.data;
           }
@@ -42,12 +42,12 @@ const ToDoDetails = () => {
 
         dispatch({
           type: 'LOAD_NOTE_LIST',
-          payload: newNotes
+          payload: newNotes,
         });
 
         // dispatch({ type: 'MODAL_TOGGLE', payload: false });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: 'UPDATE_TOAST_MESSAGE', payload: err });
         console.log(err);
       });
@@ -55,24 +55,24 @@ const ToDoDetails = () => {
 
   const removeNote = () => {
     deleteNote(noteId)
-      .then(data => {
-        let newNotes = notes.filter(note => note._id !== noteId);
+      .then((data) => {
+        let newNotes = notes.filter((note) => note._id !== noteId);
         dispatch({ type: 'LOAD_NOTE_LIST', payload: newNotes });
 
         dispatch({ type: 'UPDATE_TOAST_MESSAGE', payload: data });
         dispatch({ type: 'MODAL_TOGGLE', payload: false });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: 'UPDATE_TOAST_MESSAGE', payload: err });
       });
   };
 
   useEffect(() => {
     getNoteDetails(noteId)
-      .then(data => {
+      .then((data) => {
         dispatch({ type: 'LOAD_NOTE_DETAILS', payload: data });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }, [dispatch, noteId]);
@@ -171,7 +171,7 @@ const ToDoDetails = () => {
                         new Date(noteDetails.executionDate),
                         'dd MMMM yyyy',
                         {
-                          locale: es
+                          locale: es,
                         }
                       )}
                   </span>
@@ -183,7 +183,7 @@ const ToDoDetails = () => {
                         new Date(noteDetails.dateRegistered),
                         'dd MMMM yyyy',
                         {
-                          locale: es
+                          locale: es,
                         }
                       )}
                   </span>
@@ -197,7 +197,7 @@ const ToDoDetails = () => {
                             new Date(noteDetails.finishedDate),
                             'dd MMMM yyyy',
                             {
-                              locale: es
+                              locale: es,
                             }
                           )}
                       </span>
@@ -210,14 +210,24 @@ const ToDoDetails = () => {
                     {noteDetails.title}
                   </span>
                   <br />
-                  <span>
+                  <div>
                     {noteDetails.description && (
                       <>
                         <span className="text-muted">Description: </span>
-                        {noteDetails.description}
+                        <br />
+                        {noteDetails.description
+                          .split('\n')
+                          .map((item, key) => {
+                            return (
+                              <span key={key}>
+                                {item}
+                                <br />
+                              </span>
+                            );
+                          })}
                       </>
                     )}
-                  </span>
+                  </div>
                 </>
               )}
             </div>
