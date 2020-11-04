@@ -19,7 +19,7 @@ const ToDoList = () => {
 
   useEffect(() => {
     dispatch({ type: 'LOADER', payload: true });
-    getNotes()
+    getNotes(false)
       .then((data) => {
         dispatch({
           type: 'LOAD_NOTE_LIST',

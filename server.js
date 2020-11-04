@@ -10,7 +10,7 @@ const db = require('./config/keys').mongoURI;
 mongoose
   .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('mongodb connected'))
-  .catch(err => console.log('DB error', err));
+  .catch((err) => console.log('DB error', err));
 
 // Body parser
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -37,4 +37,4 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 port = process.env.PORT || 5011;
-app.listen(port, () => console.log(`server running on port: ${port}`));
+app.listen(port, () => console.log(`http://localhost:${port}`));

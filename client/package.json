@@ -13,6 +13,7 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "^3.3.0",
     "react-toastify": "^5.4.0",
+    "react-toggle": "^4.1.1",
     "reactstrap": "^8.0.0"
   },
   "scripts": {

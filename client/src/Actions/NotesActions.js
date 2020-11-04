@@ -9,10 +9,10 @@ export const createNote = (data) => {
   });
 };
 
-export const getNotes = () => {
+export const getNotes = (body) => {
   return new Promise((resolve, reject) => {
     axiosInst
-      .get('/api/notes/')
+      .get(`/api/notes/${body}`)
       .then((res) => resolve(res.data))
       .catch((err) => reject(err.response.data));
   });

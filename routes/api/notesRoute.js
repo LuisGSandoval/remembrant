@@ -49,14 +49,14 @@ router.post(
  * @access Private
  */
 router.get(
-  '/',
+  '/:status',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Note.find(
       {
         activeNote: true,
         creator: req.user.id,
-        finishedTask: req.body.finishedTask,
+        finishedTask: req.params.status,
       },
       { description: 0 }
     ).then((notes) => {
