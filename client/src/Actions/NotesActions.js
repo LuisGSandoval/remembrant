@@ -48,7 +48,7 @@ export const deleteNote = (id) => {
 export const getNoteDetails = (id) => {
   return new Promise((resolve, reject) => {
     axiosInst
-      .get(`/api/notes/${id}`)
+      .get(`/api/notes/byID/${id}`)
       .then((res) => {
         resolve(res.data);
       })

@@ -52,6 +52,8 @@ router.get(
   '/:status',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
+    console.log(' ********** Luis, probando', req.params.id);
+
     Note.find(
       {
         activeNote: true,
@@ -182,7 +184,7 @@ router.patch(
 
 /**
  * @route DELETE /api/notes/:id
- * @desc Get one specific note // note details
+ * @desc Delete a specific note
  * @access Private
  */
 
@@ -221,7 +223,7 @@ router.delete(
  */
 
 router.get(
-  '/:id',
+  '/byID/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Note.find({
