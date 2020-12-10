@@ -19,9 +19,11 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 // use routes
 const access = require('./routes/api/accessRoute');
 const notes = require('./routes/api/notesRoute');
+const transactions = require('./routes/api/transactions');
 
 app.use('/api/access', access);
 app.use('/api/notes', notes);
+app.use('/api/transactions', transactions);
 
 // Passport
 require('./config/passport')(passport);
