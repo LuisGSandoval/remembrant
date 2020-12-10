@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const passport = require('passport');
 const Transaction = require('../../models/Transaction');
 
 /**
@@ -11,79 +10,29 @@ const Transaction = require('../../models/Transaction');
 router.post('/new', (req, res) => {
   const { data } = req.body;
   const { transaction } = data;
-  const {
-    id,
-    reference,
-    customer_email,
-    user_legal_id_type,
-    user_legal_id,
-    customer_data,
-    status,
-  } = transaction;
+  const { id, reference } = transaction;
 
   const newTransaction = new Transaction({
-    transactionId: transactionId,
+    transactionId: id,
     referenceId: reference,
     description: JSON.stringify(req.body),
   });
 
-  let bodyToUpdate = {
-    // Bank data
-    customerNameBank: customer_data.full_name,
-    customerEmailBank: customer_email,
-    customerDocTypeBank: user_legal_id_type,
-    customerDocNumBank: user_legal_id,
-    customerPhoneNumberBank: customer_data.phone_number,
-    customerPaymentStatusBank: status,
-    // for logistical purposes inside website
-    bankReferenceId: id,
-  };
-
   newTransaction
     .save()
-    .then(() => {
-      Appointment.findOneAndUpdate(
-        {
-          paymentReferenceId: reference,
-        },
-        {
-          $set: {
-            ...bodyToUpdate,
-            appointmentStatus: 'after bank payment process',
-          },
-        },
-        { new: true, useFindAndModify: false }
-      )
-        .then((updatedAppointment) => {
-          res.json({
-            msg: 'Cita agendada exitosamente',
-            type: 'success',
-            data: updatedAppointment,
-          });
-        })
-        .catch((err) =>
-          res.status(400).json({
-            msg: 'Error al agendada la cita',
-            type: 'error',
-            data: err,
-          })
-        );
+    .then((data) => {
+      res.json({
+        msg: 'Transacción exitosa',
+        type: 'success',
+        data: data,
+      });
     })
     .catch((err) => {
-      const newAppointment = new Appointment({
-        ...bodyToUpdate,
-        appointmentStatus: 'ref not found / after bank payment process',
+      res.json({
+        msg: 'Error al crear la transaccón',
+        type: 'danger',
+        data: err,
       });
-      newAppointment
-        .save()
-        .then(() => {})
-        .catch(
-          res.status(400).json({
-            msg: 'Error al guardar data',
-            type: 'danger',
-            data: err,
-          })
-        );
     });
 });
 
