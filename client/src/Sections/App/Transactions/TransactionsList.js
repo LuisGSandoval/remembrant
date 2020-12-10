@@ -2,7 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { CTX } from '../../../Store/Store';
 import { getTxs } from '../../../Actions/TransactionsActions';
 import { ListGroup, Collapse, Button, Card, CardBody } from 'reactstrap';
-
+import JSONPretty from 'react-json-prettify';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 const TransactionsList = () => {
   const [store, dispatch] = useContext(CTX);
 
@@ -39,9 +41,9 @@ const TransactionsList = () => {
           transactions.map((tx) => (
             <TransactionsItem
               tx={tx}
-              data={tx.description ? JSON.parse(tx.description) : ''}
+              data={tx ? JSON.parse(tx.description) : ''}
               key={tx._id}
-            ></TransactionsItem>
+            />
           ))}
       </ListGroup>
     </div>
@@ -55,13 +57,23 @@ const TransactionsItem = ({ tx, data }) => {
 
   return (
     <div>
-      <Button onClick={toggleDescription}>
-        Referencia <b> {tx.referenceId} </b>
+      <Button onClick={toggleDescription} block>
+        Referencia <b> {tx.referenceId ? tx.referenceId : ''} </b> <br />
+        fecha:{' '}
+        <b>
+          {tx.dateRegistered
+            ? format(new Date(tx.dateRegistered), 'dd MMMM yyyy', {
+                locale: es,
+              })
+            : ''}
+        </b>
       </Button>
 
       <Collapse isOpen={showCollapsable}>
         <Card className="mt-3">
-          <CardBody>{JSON.stringify(data, null, 2)}</CardBody>
+          <CardBody>
+            {data ? <JSONPretty json={data} padding={4} /> : null}
+          </CardBody>
         </Card>
       </Collapse>
 

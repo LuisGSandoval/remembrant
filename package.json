@@ -36,6 +36,7 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "path": "^0.12.7",
+    "react-json-prettify": "^0.2.0",
     "validator": "^10.11.0"
   },
   "devDependencies": {

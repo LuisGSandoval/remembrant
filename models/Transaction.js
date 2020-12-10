@@ -14,6 +14,10 @@ const TransactionSchema = new Schema({
   description: {
     type: String,
   },
+  dateRegistered: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports = Transaction = mongoose.model(
