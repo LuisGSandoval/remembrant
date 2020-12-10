@@ -11,6 +11,9 @@ const TransactionSchema = new Schema({
   transactionId: {
     type: String,
   },
+  description: {
+    type: String,
+  },
 });
 
 module.exports = Transaction = mongoose.model(
