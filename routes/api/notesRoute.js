@@ -52,8 +52,6 @@ router.get(
   '/:status',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    console.log(' ********** Luis, probando', req.params.id);
-
     Note.find(
       {
         activeNote: true,

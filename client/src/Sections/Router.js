@@ -10,10 +10,10 @@ import ModalTemplate from '../Components/Modal';
 
 // Visitor routes
 const Login = React.lazy(() => import('./Website/Login'));
-const Register = React.lazy(() => import('./Website/Register'));
 
 // logged in users
-const ToDo = React.lazy(() => import('./App/ToDo/ToDo'));
+const ToDo = React.lazy(() => import('./App/ToDo'));
+const Transactions = React.lazy(() => import('./App/Transactions'));
 
 export default function Router() {
   useEffect(() => {
@@ -40,6 +40,7 @@ export default function Router() {
           <ModalTemplate />
           <Suspense fallback={<div>Cargando...</div>}>
             <Switch>
+              <Route path="/transactions" component={Transactions} />
               <Route path="/" component={ToDo} />
             </Switch>
           </Suspense>
@@ -48,7 +49,6 @@ export default function Router() {
         <BrowserRouter>
           <Suspense fallback={<div>Cargando...</div>}>
             <Switch>
-              <Route path="/register" component={Register} />
               <Route path="/" component={Login} />
             </Switch>
           </Suspense>

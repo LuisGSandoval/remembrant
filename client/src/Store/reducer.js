@@ -1,6 +1,14 @@
 export const reducer = (state, action) => {
   switch (action.type) {
     //******************************* */
+    //*        TRANSACTIONS           */
+    //******************************* */
+    case 'LOAD_TRANSACTIONS_LIST':
+      return {
+        ...state,
+        transactions: action.payload,
+      };
+    //******************************* */
     //*             NOTES             */
     //******************************* */
 
@@ -8,29 +16,30 @@ export const reducer = (state, action) => {
     case 'NOTE_FORM_UPDATE':
       return {
         ...state,
-        todoForm: action.payload
+        todoForm: action.payload,
       };
     case 'LOAD_NOTE_LIST':
       return {
         ...state,
-        notes: action.payload
+        notes: action.payload,
       };
+
     case 'CHANGE_SORTING':
       return {
         ...state,
-        sortBy: action.payload
+        sortBy: action.payload,
       };
 
     case 'LOAD_NOTE_ID':
       return {
         ...state,
-        noteId: action.payload
+        noteId: action.payload,
       };
 
     case 'LOAD_NOTE_DETAILS':
       return {
         ...state,
-        noteDetails: action.payload
+        noteDetails: action.payload,
       };
 
     //******************************* */
@@ -41,20 +50,20 @@ export const reducer = (state, action) => {
     case 'LOADER':
       return {
         ...state,
-        loaderActivation: action.payload
+        loaderActivation: action.payload,
       };
 
     case 'ACTIVATE_UPDATE_MODE':
       return {
         ...state,
-        updateMode: action.payload
+        updateMode: action.payload,
       };
 
     // It's the alert message that tells the user everything of the app
     case 'UPDATE_TOAST_MESSAGE':
       return {
         ...state,
-        toastMsg: action.payload
+        toastMsg: action.payload,
       };
 
     //******************************* */
@@ -64,7 +73,7 @@ export const reducer = (state, action) => {
     case 'MODAL_TOGGLE':
       return {
         ...state,
-        modalOpen: action.payload
+        modalOpen: action.payload,
       };
 
     //******************************* */

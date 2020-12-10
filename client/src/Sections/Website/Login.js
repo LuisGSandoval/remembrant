@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { CTX } from '../../Store/Store';
 import { login } from '../../Actions/AuthActions';
-import { Link } from 'react-router-dom';
 
 import {
   Button,
@@ -12,7 +11,7 @@ import {
   Input,
   InputGroup,
   Container,
-  Col
+  Col,
 } from 'reactstrap';
 function Login() {
   const [, dispatch] = useContext(CTX);
@@ -20,26 +19,26 @@ function Login() {
   const [loginForm, setLogin] = useState({
     email: '',
     password: '',
-    errors: {}
+    errors: {},
   });
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setLogin({ ...loginForm, [name]: value });
   };
-  const loginSubmition = e => {
+  const loginSubmition = (e) => {
     e.preventDefault();
 
     dispatch({
       type: 'LOADER_ACTIVATION',
-      payload: true
+      payload: true,
     });
     login(loginForm)
       .then(console.log)
-      .catch(errors => {
+      .catch((errors) => {
         dispatch({
           type: 'LOADER_ACTIVATION',
-          payload: false
+          payload: false,
         });
         setLogin({ ...loginForm, errors });
       });
@@ -95,8 +94,6 @@ function Login() {
                     Ingresar
                   </Button>
                 </div>
-
-                <Link to="/register">Registrarse</Link>
               </Form>
             </CardBody>
           </Card>

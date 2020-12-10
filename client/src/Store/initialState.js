@@ -1,4 +1,5 @@
 export const initialState = {
+  transactions: [],
   notes: [],
 
   // Utils
@@ -6,14 +7,14 @@ export const initialState = {
   loaderActivation: false,
   modalOpen: {
     section: '',
-    open: false
+    open: false,
   },
   updateMode: false,
 
   // Notes state
   sortBy: {
     finished: 'none',
-    type: 'priority'
+    type: 'priority',
   },
   noteId: '',
   noteDetails: null,
@@ -22,6 +23,6 @@ export const initialState = {
     title: '',
     description: '',
     priority: 1,
-    errors: {}
-  }
+    errors: {},
+  },
 };
