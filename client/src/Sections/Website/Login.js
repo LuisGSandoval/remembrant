@@ -1,18 +1,20 @@
-import React, { useState, useContext } from 'react';
-import { CTX } from '../../Store/Store';
-import { login } from '../../Actions/AuthActions';
-
 import {
   Button,
   Card,
   CardBody,
-  FormGroup,
+  Col,
+  Container,
   Form,
+  FormGroup,
   Input,
   InputGroup,
-  Container,
-  Col,
 } from 'reactstrap';
+import React, { useContext, useState } from 'react';
+
+import { CTX } from '../../Store/Store';
+import ghLogo from "../../Assets/img/github-icon.png"
+import { login } from '../../Actions/AuthActions';
+
 function Login() {
   const [, dispatch] = useContext(CTX);
 
@@ -93,6 +95,16 @@ function Login() {
                   <Button className="my-4" color="dark" type="submit">
                     Ingresar
                   </Button>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                  <a
+                    href="https://github.com/LuisGSandoval/remembrant"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src={ghLogo} alt="github repo" title="project repo on github" />
+                  </a>
                 </div>
               </Form>
             </CardBody>
